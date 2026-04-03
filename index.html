@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deviprasad Sahu | Level 99 Coder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --danger-red: #ff003c;
+            --ash-gray: #1a1a1a;
+            --dark-bg: #000000;
+        }
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Custom cursor implementation */
+        }
+        .font-sync { font-family: 'Syncopate', sans-serif; }
+        
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: contrast(120%) brightness(80%);
+        }
+
+        /* CUSTOM CURSOR - RETAINED & COLORED RED */
+        .custom-cursor {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--danger-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-difference; /* Keeps it visible over red */
+        }
+
+        .custom-cursor-dot {
+            width: 4px;
+            height: 4px;
+            background-color: var(--danger-red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* DANGEROUS UI ELEMENTS */
+        .hazard-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-left: 3px solid #333;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hazard-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 60, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .hazard-card:hover {
+            border-left-color: var(--danger-red);
+            transform: translateX(10px) scale(1.01);
+            background: rgba(15, 0, 0, 0.9);
+            box-shadow: -10px 0 30px rgba(255, 0, 60, 0.1);
+        }
+
+        .hazard-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .glow-text-danger {
+            text-shadow: 0 0 15px rgba(255, 0, 60, 0.7);
+        }
+
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        /* Scanline Effect */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+
+    <nav class="fixed top-0 w-full p-8 flex justify-between items-center z-50 mix-blend-difference">
+        <div class="font-sync text-lg tracking-tighter text-white glow-text-danger">D.SAHU / Lvl 99</div>
+        <div class="flex gap-10 text-[10px] uppercase tracking-[0.4em] font-bold">
+            <a href="#work" class="nav-link text-gray-400 hover:text-white transition">Work</a>
+            <a href="#play" class="nav-link text-gray-400 hover:text-white transition">Play</a>
+            <a href="#contact" class="nav-link bg-[--danger-red] text-black px-4 py-1 hover:bg-white transition">Contact</a>
+        </div>
+    </nav>
+
+    <section class="h-screen flex flex-col justify-center items-center px-6 relative">
+        <div class="text-center z-20">
+            <h2 class="text-[--danger-red] font-bold tracking-[0.5em] text-xs mb-4 opacity-0 hero-fade font-sync">STATUS: ACTIVE // PROBLEM SOLVER</h2>
+            <h1 class="font-sync text-6xl md:text-9xl mb-6 reveal-text leading-none text-white glow-text-danger">
+                DEVIPRASAD<br>SAHU
+            </h1>
+            <p class="text-gray-500 max-w-lg mx-auto text-sm md:text-base leading-relaxed opacity-0 hero-fade">
+                Merging absolute logical precision with athletic aggression. Engineering high-performance code, built to survive.
+            </p>
+        </div>
+        <div class="absolute bottom-10 animate-bounce z-20">
+            <div class="w-[1px] h-20 bg-gradient-to-b from-[--danger-red] to-transparent"></div>
+        </div>
+    </section>
+
+    <section id="play" class="py-32 px-6 bg-black relative z-20">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center gap-4 mb-20">
+                <div class="h-[1px] w-20 bg-[--danger-red]"></div>
+                <h3 class="font-sync text-2xl uppercase text-white glow-text-danger">Physical Protocols</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="hazard-card p-12 rounded-r-3xl">
+                    <div class="text-[--danger-red] font-sync text-xs tracking-widest mb-2">[ CRICKET_PROTOCOL ]</div>
+                    <h4 class="font-sync text-3xl mb-6 text-white uppercase reveal-text">The Dominant Batter</h4>
+                    <p class="text-gray-400 leading-relaxed mb-8">Cricket demands calculated aggression. I approach every code problem with the same mindset: analyze the delivery, identify the weakness, and commit to the definitive stroke. Maximum focus, zero hesitation.</p>
+                </div>
+
+                <div class="hazard-card p-12 rounded-r-3xl">
+                    <div class="text-[--danger-red] font-sync text-xs tracking-widest mb-2">[ VOLLEYBALL_PROTOCOL ]</div>
+                    <h4 class="font-sync text-3xl mb-6 text-white uppercase reveal-text">The Kinetic Spiker</h4>
+                    <p class="text-gray-400 leading-relaxed mb-8">Volleyball is chaos managed by teamwork and explosive reflexes. I thrive in high-pressure dev cycles that require split-second adaptation and decisive action. React fast, execute perfectly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="py-32 bg-zinc-950 relative z-20 border-t border-zinc-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <h3 class="font-sync text-4xl mb-24 text-center text-white glow-text-danger">Core <span class="text-[--danger-red]">Systems</span></h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 font-sync text-center uppercase tracking-widest text-xs">
+                <div class="hazard-card p-8 text-white hover:text-[--danger-red]">Python</div>
+                <div class="hazard-card p-8 text-white hover:text-[--danger-red]">React/Web</div>
+                <div class="hazard-card p-8 text-white hover:text-[--danger-red]">Node.js</div>
+                <div class="hazard-card p-8 text-white hover:text-[--danger-red]">DSA / Logic</div>
+            </div>
+        </div>
+    </section>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <script>
+        // --- CURSOR LOGIC (RETAINED TRAIL) ---
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
+        
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX - 12, y: e.clientY - 12, duration: 0.4, ease: "power2.out" });
+            gsap.to(cursorDot, { x: e.clientX - 2, y: e.clientY - 2, duration: 0.1 });
+        });
+
+        // --- DANGEROUS BACKGROUND: THREE.JS KINETIC GLITCH ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Particle Geometry
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 8000;
+        const posArray = new Float32Array(particlesCount * 3);
+        const velArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 6; // Distribution
+            velArray[i] = (Math.random() - 0.5) * 0.01; // Velocity
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        // Crimson Red Material
+        const material = new THREE.PointsMaterial({
+            size: 0.006,
+            color: 0xff003c, // Danger Red
+            transparent: true,
+            opacity: 0.7,
+            blending: THREE.AddBlending // Makes it glow when particles overlap
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, material);
+        scene.add(particlesMesh);
+        camera.position.z = 2.5;
+
+        // Interaction Variables
+        let mouseX = 0; let mouseY = 0;
+        let targetX = 0; let targetY = 0;
+        
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) - 0.5;
+            mouseY = (event.clientY / window.innerHeight) - 0.5;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Kinetic rotation based on mouse
+            targetX = mouseX * 0.5;
+            targetY = mouseY * 0.5;
+            particlesMesh.rotation.y += 0.5 * (targetX - particlesMesh.rotation.y);
+            particlesMesh.rotation.x += 0.5 * (targetY - particlesMesh.rotation.x);
+            
+            // Random jitter (Glitch effect)
+            if(Math.random() > 0.95) {
+                 particlesMesh.position.x = (Math.random() - 0.5) * 0.02;
+                 material.color.setHex(0xffffff); // Glitch to white
+            } else {
+                 particlesMesh.position.x = 0;
+                 material.color.setHex(0xff003c); // Reset to red
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- GSAP REVEALS (RETAINED) ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.onload = () => {
+            const tl = gsap.timeline();
+            tl.from(".reveal-text", { y: 150, duration: 1.2, ease: "expo.out", stagger: 0.3 })
+              .to(".hero-fade", { opacity: 1, duration: 1 }, "-=0.8");
+        };
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
